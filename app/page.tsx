@@ -175,7 +175,7 @@ export default function HomePage() {
                   <Box fontSize="4xl">📋</Box>
                   <Heading size="md" marginTop="18px" color="cyan.900">1. Sign up</Heading>
                   <Text textAlign="center" color="gray.600">
-                    Sign up as a buyer or seller and we'll connect you!
+                    Sign up as a buyer or seller and we&apos;ll connect you!
                   </Text>
                 </VStack>
               </CardBody>

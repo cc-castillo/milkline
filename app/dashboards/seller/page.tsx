@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Container,
@@ -118,6 +118,16 @@ export default function MilkLineDashboard() {
   const { isOpen: isQuoteDetailsModalOpen, onOpen: onQuoteDetailsModalOpen, onClose: onQuoteDetailsModalClose } = useDisclosure();
   const { isOpen: isCancelConfirmModalOpen, onOpen: onCancelConfirmModalOpen, onClose: onCancelConfirmModalClose } = useDisclosure();
   const { isOpen: isMessageModalOpen, onOpen: onMessageModalOpen, onClose: onMessageModalClose } = useDisclosure();
+
+  // Color mode values - must be called at top level, before any conditional returns
+  const inputBg = useColorModeValue('white', 'gray.700');
+  const inputColor = useColorModeValue('gray.800', 'gray.100');
+  const inputBorderColor = useColorModeValue('gray.300', 'gray.600');
+  const inputPlaceholderColor = useColorModeValue('gray.400', 'gray.500');
+  const textareaBg = useColorModeValue('white', 'gray.700');
+  const textareaColor = useColorModeValue('gray.800', 'gray.100');
+  const textareaBorderColor = useColorModeValue('gray.300', 'gray.600');
+  const textareaPlaceholderColor = useColorModeValue('gray.400', 'gray.500');
 
   // Load user data and RFQs
   useEffect(() => {
@@ -302,6 +312,7 @@ export default function MilkLineDashboard() {
     };
 
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, toast]);
 
 
@@ -1392,10 +1403,10 @@ export default function MilkLineDashboard() {
                     value={quoteForm.pricePerLiter}
                     onChange={(e) => setQuoteForm({ ...quoteForm, pricePerLiter: e.target.value })}
                     placeholder="$0.00"
-                    bg={useColorModeValue('white', 'gray.700')}
-                    color={useColorModeValue('gray.800', 'gray.100')}
-                    borderColor={useColorModeValue('gray.300', 'gray.600')}
-                    _placeholder={{ color: useColorModeValue('gray.400', 'gray.500') }}
+                    bg={inputBg}
+                    color={inputColor}
+                    borderColor={inputBorderColor}
+                    _placeholder={{ color: inputPlaceholderColor }}
                   />
                   <Text fontSize="sm" color="white" mt={1}>
                     Total: {
@@ -1413,10 +1424,10 @@ export default function MilkLineDashboard() {
                     value={quoteForm.deliveryDate}
                     onChange={(e) => setQuoteForm({ ...quoteForm, deliveryDate: e.target.value })}
                     min={new Date().toISOString().split('T')[0]}
-                    bg={useColorModeValue('white', 'gray.700')}
-                    color={useColorModeValue('gray.800', 'gray.100')}
-                    borderColor={useColorModeValue('gray.300', 'gray.600')}
-                    _placeholder={{ color: useColorModeValue('gray.400', 'gray.500') }}
+                    bg={inputBg}
+                    color={inputColor}
+                    borderColor={inputBorderColor}
+                    _placeholder={{ color: inputPlaceholderColor }}
                   />
                 </FormControl>
 
@@ -1427,10 +1438,10 @@ export default function MilkLineDashboard() {
                     onChange={(e) => setQuoteForm({ ...quoteForm, notes: e.target.value })}
                     placeholder="Add any additional information about your quote..."
                     rows={4}
-                    bg={useColorModeValue('white', 'gray.700')}
-                    color={useColorModeValue('gray.800', 'gray.100')}
-                    borderColor={useColorModeValue('gray.300', 'gray.600')}
-                    _placeholder={{ color: useColorModeValue('gray.400', 'gray.500') }}
+                    bg={inputBg}
+                    color={inputColor}
+                    borderColor={inputBorderColor}
+                    _placeholder={{ color: inputPlaceholderColor }}
                   />
                 </FormControl>
               </VStack>
@@ -1620,10 +1631,10 @@ export default function MilkLineDashboard() {
                       onChange={(e) => setMessageContent(e.target.value)}
                       placeholder="Type your message to the buyer..."
                       rows={6}
-                      bg={useColorModeValue('white', 'gray.700')}
-                      color={useColorModeValue('gray.800', 'gray.100')}
-                      borderColor={useColorModeValue('gray.300', 'gray.600')}
-                      _placeholder={{ color: useColorModeValue('gray.400', 'gray.500') }}
+                      bg={textareaBg}
+                      color={textareaColor}
+                      borderColor={textareaBorderColor}
+                      _placeholder={{ color: textareaPlaceholderColor }}
                     />
                   </FormControl>
                 </VStack>

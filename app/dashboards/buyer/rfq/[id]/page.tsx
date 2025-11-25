@@ -103,6 +103,14 @@ export default function RFQDetailsPage() {
   const messageBgSeller = useColorModeValue('gray.200', 'gray.600');
   const messageColorBuyer = useColorModeValue('white', 'white');
   const messageColorSeller = useColorModeValue('gray.800', 'gray.100');
+  const notesBg = useColorModeValue('gray.50', 'gray.700');
+  const notesBorderColor = useColorModeValue('gray.200', 'gray.600');
+  const emptyMessagesBg = useColorModeValue('gray.50', 'gray.700');
+  const emptyMessagesBorderColor = useColorModeValue('gray.200', 'gray.600');
+  const textareaBg = useColorModeValue('white', 'gray.700');
+  const textareaColor = useColorModeValue('gray.800', 'gray.100');
+  const textareaBorderColor = useColorModeValue('gray.300', 'gray.600');
+  const textareaPlaceholderColor = useColorModeValue('gray.400', 'gray.500');
 
   useEffect(() => {
     const loadData = async () => {
@@ -928,10 +936,10 @@ export default function RFQDetailsPage() {
                       </Text>
                       <Box
                         p={4}
-                        bg={useColorModeValue('gray.50', 'gray.700')}
+                        bg={notesBg}
                         borderRadius="md"
                         borderWidth="1px"
-                        borderColor={useColorModeValue('gray.200', 'gray.600')}
+                        borderColor={notesBorderColor}
                       >
                         <Text whiteSpace="pre-wrap" color={textColor}>
                           {selectedQuote.notes}
@@ -981,10 +989,10 @@ export default function RFQDetailsPage() {
                   ) : messages.length === 0 ? (
                     <Box
                       p={4}
-                      bg={useColorModeValue('gray.50', 'gray.700')}
+                      bg={emptyMessagesBg}
                       borderRadius="md"
                       borderWidth="1px"
-                      borderColor={useColorModeValue('gray.200', 'gray.600')}
+                      borderColor={emptyMessagesBorderColor}
                     >
                       <Text fontSize="sm" color={textColor} textAlign="center">
                         No messages yet. Start a conversation with {selectedQuote.sellerName}.
@@ -1065,10 +1073,10 @@ export default function RFQDetailsPage() {
                       placeholder={`Message ${selectedQuote.sellerName}...`}
                       rows={3}
                       resize="none"
-                      bg={useColorModeValue('white', 'gray.700')}
-                      color={useColorModeValue('gray.800', 'gray.100')}
-                      borderColor={useColorModeValue('gray.300', 'gray.600')}
-                      _placeholder={{ color: useColorModeValue('gray.400', 'gray.500') }}
+                      bg={textareaBg}
+                      color={textareaColor}
+                      borderColor={textareaBorderColor}
+                      _placeholder={{ color: textareaPlaceholderColor }}
                     />
                     <Button
                       colorScheme="cyan"

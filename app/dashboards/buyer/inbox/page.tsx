@@ -71,6 +71,11 @@ export default function BuyerInbox() {
   const messageBgSeller = useColorModeValue('gray.100', 'gray.700');
   const messageTextBuyer = useColorModeValue('gray.800', 'gray.100');
   const messageTextSeller = useColorModeValue('gray.800', 'gray.100');
+  const threadBorderColor = useColorModeValue('gray.200', 'gray.700');
+  const textareaBg = useColorModeValue('white', 'gray.700');
+  const textareaColor = useColorModeValue('gray.800', 'gray.100');
+  const textareaBorderColor = useColorModeValue('gray.300', 'gray.600');
+  const textareaPlaceholderColor = useColorModeValue('gray.400', 'gray.500');
 
   const handleLogout = async () => {
     try {
@@ -408,7 +413,7 @@ export default function BuyerInbox() {
                           key={thread.id}
                           p={4}
                           borderBottom="1px solid"
-                          borderColor={useColorModeValue('gray.200', 'gray.700')}
+                          borderColor={threadBorderColor}
                           cursor="pointer"
                           bg={selectedThread?.id === thread.id ? selectedThreadBg : 'transparent'}
                           _hover={{ bg: hoverThreadBg }}
@@ -497,10 +502,10 @@ export default function BuyerInbox() {
                           onChange={(e) => setNewMessage(e.target.value)}
                           placeholder="Type your reply..."
                           rows={3}
-                          bg={useColorModeValue('white', 'gray.700')}
-                          color={useColorModeValue('gray.800', 'gray.100')}
-                          borderColor={useColorModeValue('gray.300', 'gray.600')}
-                          _placeholder={{ color: useColorModeValue('gray.400', 'gray.500') }}
+                          bg={textareaBg}
+                          color={textareaColor}
+                          borderColor={textareaBorderColor}
+                          _placeholder={{ color: textareaPlaceholderColor }}
                         />
                         <Button
                           colorScheme="cyan"

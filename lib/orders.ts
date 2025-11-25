@@ -44,7 +44,7 @@ export interface TransformedOrder {
   quantity: number;
   totalPrice: number;
   deliveryDate: string;
-  status: 'confirmed' | 'in_transit' | 'delivered' | 'cancelled';
+  status: 'created' | 'confirmed' | 'in_transit' | 'delivered' | 'cancelled';
   trackingInfo?: {
     carrier?: string;
     trackingNumber?: string;

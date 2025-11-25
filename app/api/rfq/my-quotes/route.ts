@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
 
     // If we have quotes, fetch RFQ data for each one
     if (myQuotes && myQuotes.length > 0) {
-      const rfqIds = [...new Set(myQuotes.map((q: any) => q.rfq_id).filter(Boolean))];
+      const rfqIds = Array.from(new Set(myQuotes.map((q: any) => q.rfq_id).filter(Boolean)));
       
       if (rfqIds.length > 0) {
         const { data: rfqsData, error: rfqsError } = await supabaseAdmin
@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
 
         if (!rfqsError && rfqsData) {
           // Fetch buyer information for each RFQ
-          const buyerIds = [...new Set(rfqsData.map((r: any) => r.buyer_id).filter(Boolean))];
+          const buyerIds = Array.from(new Set(rfqsData.map((r: any) => r.buyer_id).filter(Boolean)));
           
           let buyerMap = new Map();
           if (buyerIds.length > 0) {

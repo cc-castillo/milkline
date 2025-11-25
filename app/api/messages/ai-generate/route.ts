@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { dynamic } from '@/lib/route-config';
+
+export { dynamic };
 
 export async function POST(request: NextRequest) {
   try {

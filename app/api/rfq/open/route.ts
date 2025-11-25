@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { createClient } from '@supabase/supabase-js';
+import { dynamic } from '@/lib/route-config';
+
+export { dynamic };
 
 export async function GET(request: NextRequest) {
   try {

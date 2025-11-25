@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch buyer information for each RFQ
     if (rfqs && rfqs.length > 0) {
-      const buyerIds = [...new Set(rfqs.map(rfq => rfq.buyer_id).filter(Boolean))];
+      const buyerIds = Array.from(new Set(rfqs.map(rfq => rfq.buyer_id).filter(Boolean)));
       
       if (buyerIds.length > 0) {
         const { data: buyers } = await supabaseAdmin

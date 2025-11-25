@@ -1,0 +1,7 @@
+{
+  "/page": "app/page.js",
+  "/dashboards/seller/page": "app/dashboards/seller/page.js",
+  "/api/user-profile/route": "app/api/user-profile/route.js",
+  "/dashboards/seller/inbox/page": "app/dashboards/seller/inbox/page.js",
+  "/api/messages/seller-inbox/route": "app/api/messages/seller-inbox/route.js"
+}

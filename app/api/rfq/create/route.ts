@@ -1,0 +1,109 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { supabaseAdmin } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+
+export async function POST(request: NextRequest) {
+  try {
+    // Get the auth token from the request
+    const authHeader = request.headers.get('authorization');
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    
+    // Create a client with the user's token to verify the user
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
+
+    // Get the current user
+    const { data: { user }, error: userError } = await userClient.auth.getUser();
+    
+    if (userError || !user || !user.email) {
+      console.error('Error getting user:', userError);
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    // Get the request body
+    const body = await request.json();
+    const { milkType, milkQuantity, neededByDate, budget, notes } = body;
+
+    // Validate required fields
+    if (!milkType || !milkQuantity || !neededByDate) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
+    // Get the buyer ID using admin client to bypass RLS
+    const { data: buyerProfile, error: buyerError } = await supabaseAdmin
+      .from('Buyers')
+      .select('id')
+      .eq('email_login', user.email)
+      .maybeSingle();
+
+    if (buyerError) {
+      console.error('Error fetching buyer profile:', buyerError);
+      return NextResponse.json(
+        { error: buyerError.message },
+        { status: 500 }
+      );
+    }
+
+    if (!buyerProfile) {
+      return NextResponse.json(
+        { error: 'Buyer profile not found' },
+        { status: 404 }
+      );
+    }
+
+    // Create the RFQ using admin client to bypass RLS
+    const { data: rfqData, error: rfqError } = await supabaseAdmin
+      .from('Requests')
+      .insert({
+        buyer_id: buyerProfile.id,
+        milk_type: milkType,
+        quantity_liters: milkQuantity,
+        needed_by_date: neededByDate,
+        budget_max: budget > 0 ? budget : null,
+        status: 'open',
+      })
+      .select()
+      .single();
+
+    if (rfqError) {
+      console.error('Error creating RFQ:', rfqError);
+      return NextResponse.json(
+        { error: rfqError.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      rfq: rfqData,
+    });
+  } catch (error: any) {
+    console.error('Error in create RFQ route:', error);
+    return NextResponse.json(
+      { error: error.message || 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
